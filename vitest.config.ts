@@ -21,6 +21,7 @@ export default defineConfig({
         globals: true,
         env: {
             JJ_VIEW_PERF_TRACE_FILE: traceFile,
+            JJ_CONFIG: '',
         },
         reporters: ['default', new VitestPerfReporter(traceFile)],
         testTimeout: isWindows ? 60000 : 20000,
