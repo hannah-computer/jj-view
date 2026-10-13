@@ -20,6 +20,12 @@ import { recordCommandTrace } from './perf-trace';
 
 vi.mock('vscode', () => createVscodeMock());
 
+// DirectoryWatcher prefers watchman when installed; use the native backend everywhere.
+vi.mock('../utils/binary-utils', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('../utils/binary-utils')>()),
+    isWatchmanAvailable: async () => false,
+}));
+
 declare global {
     var __JJ_VIEW_COMMAND_HOOK__: ((command: string, args: string[], durationMs: number) => void) | undefined;
 }
